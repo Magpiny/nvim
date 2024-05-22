@@ -35,3 +35,5 @@ vim.cmd("colorscheme kanagawa")
 
 -- keymaps
 require("core.keymaps")
+
+------------------------------------- END ---------------------------------------------------------
