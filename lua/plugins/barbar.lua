@@ -15,15 +15,15 @@ return {
 			icons = {
 				-- Configure the base icons on the bufferline.
 				-- Valid options to display the buffer index and -number are `true`, 'superscript' and 'subscript'
-				buffer_index = false,
-				buffer_number = false,
+				buffer_index = "superscript",
+				buffer_number = true,
 				button = "",
 				-- Enables / disables diagnostic symbols
 				diagnostics = {
-					[vim.diagnostic.severity.ERROR] = { enabled = true, icon = "ﬀ" },
-					[vim.diagnostic.severity.WARN] = { enabled = false },
-					[vim.diagnostic.severity.INFO] = { enabled = false },
-					[vim.diagnostic.severity.HINT] = { enabled = true },
+					[vim.diagnostic.severity.ERROR] = { enabled = true, icon = "󱔂" },
+					[vim.diagnostic.severity.WARN] = { enabled = false, icon = "" },
+					[vim.diagnostic.severity.INFO] = { enabled = false, icon = "" },
+					[vim.diagnostic.severity.HINT] = { enabled = true, icon = "" },
 				},
 				gitsigns = {
 					added = { enabled = true, icon = "+" },
@@ -38,7 +38,7 @@ return {
 					-- Requires `nvim-web-devicons` if `true`
 					enabled = true,
 				},
-				separator = { left = "▎", right = "" },
+				separator = { left = "󰿈", right = "" },
 
 				-- If true, add an additional separator at the end of the buffer list
 				separator_at_end = true,
@@ -49,14 +49,14 @@ return {
 				pinned = { button = "", filename = true },
 
 				-- Use a preconfigured buffer appearance— can be 'default', 'powerline', or 'slanted'
-				preset = "powerline",
+				preset = "default",
 
 				-- Configure the icons on the bufferline based on the visibility of a buffer.
 				-- Supports all the base icon options, plus `modified` and `pinned`.
-				alternate = { filetype = { enabled = false } },
+				alternate = { filetype = { enabled = true } },
 				current = { buffer_index = true },
 				inactive = { button = "×" },
-				visible = { modified = { buffer_number = false } },
+				visible = { modified = { buffer_number = true } },
 			},
 			-- insert_at_start = true,
 		},
@@ -65,6 +65,9 @@ return {
 		config = function()
 			require("barbar").setup({
 				no_name_title = "untitled",
+				tabpages = true,
+				clickable = true,
+				separator = { right = "󰅂󰅂", right = "" },
 			})
 		end,
 	},

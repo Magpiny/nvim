@@ -6,7 +6,7 @@ function codesnap.config()
 		save_path = "~/Pictures/CodeSnippets",
 		bg_theme = "bamboo",
 		watermark_font_family = "Cascadia Code",
-		watermark = "🇰🇪 @mag_piny  🏇",
+		watermark = "🇰🇪 @mag_piny",
 	})
 end
 

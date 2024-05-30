@@ -30,8 +30,8 @@ vim.g.loaded_netrwPlugin = 1
 require("lazy").setup("plugins")
 
 -- colorscheme catppuccin
---vim.cmd.colorscheme "catppuccin"
-vim.cmd("colorscheme kanagawa")
+vim.cmd.colorscheme("catppuccin")
+-- vim.cmd("colorscheme kanagawa")
 
 -- keymaps
 require("core.keymaps")
