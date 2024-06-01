@@ -13,7 +13,7 @@ return {
 							--   'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic', 'coc', 'ale', 'vim_lsp'.
 							-- or a function that returns a table as such:
 							--   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
-							sources = { "nvim_diagnostic", "coc" },
+							sources = { "nvim_lsp", "nvim_diagnostic", "coc" },
 
 							-- Displays diagnostics for the defined severity types
 							sections = { "error", "warn", "info", "hint" },
@@ -25,7 +25,7 @@ return {
 								info = "DiagnosticInfo", -- Changes diagnostics' info color.
 								hint = "DiagnosticHint", -- Changes diagnostics' hint color.
 							},
-							symbols = { error = "󱔂", warn = "", info = "", hint = "" },
+							symbols = { error = "", warn = "", info = "", hint = "" },
 							colored = true, -- Displays diagnostics status in color if set to true.
 							update_in_insert = true, -- Update diagnostics in insert mode.
 							always_visible = true, -- Show diagnostics even if there are none.

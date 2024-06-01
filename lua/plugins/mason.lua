@@ -29,6 +29,12 @@ return {
 				"pyright",
 				"clangd",
 				"jinja_lsp",
+				"rust_analyzer",
+				"clangd",
+				"cssls",
+				"cmake",
+				"jsonls",
+				"elixirls",
 			},
 			-- autoinstall configured servers with lspconfig
 			automatic_installation = true,

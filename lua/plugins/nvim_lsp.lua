@@ -6,7 +6,6 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
-
 	config = function()
 		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -17,6 +16,7 @@ return {
 
 		local on_attach = function(client, bufnr)
 			opts.buffer = bufnr
+
 			--set keybinds
 			opts.desc = "Show references"
 			keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
@@ -50,54 +50,57 @@ return {
 
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
-
-			-- Enable autocompletions
-			local capabilities = cmp_nvim_lsp.default_capabilities()
-			local signs = { Error = "x ", Warn = "! ", Hint = "h ", Info = "i " }
-			for type, icon in pairs(signs) do
-				local hl = "DiagnosticSign" .. type
-				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-			end
-
-			vim.filetype.add({
-				extension = {
-					jinja = "jinja",
-					jinja2 = "jinja",
-					j2 = "jinja",
-				},
-			})
-			require("lspconfig").jinja_lsp.setup({})
-
-			--- configure language servers
-			lspconfig.clangd.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			lspconfig["pyright"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			lspconfig["tsserver"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			lspconfig["html"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			lspconfig["rust_analyzer"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
-			lspconfig["cssls"].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
 		end
+
+		-- Enable autocompletions
+		--local capabilities = cmp_nvim_lsp.default_capabilities()
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+		for type, icon in pairs(signs) do
+			local hl = "DiagnosticSign" .. type
+			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		end
+
+		-- Enable some language servers with the additional completion capabilities offered by nvim-cmp
+
+		--- configure language servers
+		lspconfig.html.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.cssls.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.tsserver.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig.clangd.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.pyright.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.rust_analyzer.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.lua_ls.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		vim.filetype.add({
+			extension = {
+				jinja = "jinja",
+				jinja2 = "jinja",
+				j2 = "jinja",
+			},
+		})
+		require("lspconfig").jinja_lsp.setup({})
 	end,
 }

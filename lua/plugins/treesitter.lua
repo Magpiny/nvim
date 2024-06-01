@@ -16,8 +16,6 @@ return {
 				"vim",
 				"vimdoc",
 				"query",
-				"elixir",
-				"heex",
 				"javascript",
 				"html",
 				"css",
@@ -29,6 +27,7 @@ return {
 			highlight = { enable = true },
 			indent = { enable = true },
 			autotag = { enable = true },
+			auto_install = true,
 		})
 	end,
 }

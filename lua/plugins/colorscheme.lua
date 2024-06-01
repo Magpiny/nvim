@@ -1,5 +1,5 @@
 -- colorscheme
-
+--[[
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
@@ -22,17 +22,17 @@ return {
 		})
 	end,
 }
+--]]
+--
 
---
---
--- -- Kanagawa
--- return {
--- 	"rebelot/kanagawa.nvim",
--- 	lazy = true,
--- 	config = function()
--- 		-- :KanagawaCompile after each change
--- 		require("kanagawa").setup({
--- 			compile = true,
--- 		})
--- 	end,
--- }
+-- Kanagawa
+return {
+	"rebelot/kanagawa.nvim",
+	lazy = true,
+	config = function()
+		-- :KanagawaCompile after each change
+		require("kanagawa").setup({
+			compile = true,
+		})
+	end,
+}
