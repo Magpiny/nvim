@@ -93,6 +93,26 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
+		lspconfig.elixirls.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.bashls.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.cmake.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.sqlls.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+		lspconfig.tailwindcss.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 
 		vim.filetype.add({
 			extension = {
