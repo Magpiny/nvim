@@ -43,7 +43,7 @@ return {
 				lua = { "stylua" },
 				html = { "prettier" },
 				css = { "prettier" },
-				-- cpp = { { "cpptools", "clang-format", "cpplint", "ast_grep" } },
+				cpp = { { "clang-format", "cpplint", "ast_grep" } },
 				-- Conform can also run multiple formatters sequentially
 				python = { "yapf", "autopep8", "isort", "sourcery" },
 				--
