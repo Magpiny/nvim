@@ -40,4 +40,11 @@ vim.cmd("colorscheme kanagawa-dragon")
 -- keymaps
 require("core.keymaps")
 
+-- Indent Colours
+-- Colors are applied automatically based on user-defined highlight groups.
+-- There is no default value.
+vim.cmd.highlight("IndentLine guifg=#838383")
+-- Current indent line highlight
+vim.cmd.highlight("IndentLineCurrent guifg=#5d5d5d")
+
 ------------------------------------- END ---------------------------------------------------------
