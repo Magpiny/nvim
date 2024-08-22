@@ -19,5 +19,4 @@ local Plugins = {
 		opts = { signs = true },
 	},
 }
-
 return Plugins
