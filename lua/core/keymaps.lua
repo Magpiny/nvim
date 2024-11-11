@@ -14,6 +14,9 @@ vim.api.nvim_set_keymap("n", "<C-v>", ":NvimTreeOpen<CR>", { noremap = true, sil
 -- Tagbar
 vim.api.nvim_set_keymap("n", "<F8>", ":TagbarToggle<CR>", { noremap = true, silent = true })
 
+-- Terminal
+vim.api.nvim_set_keymap("n", "<C-t>", ":HauntTerm -t magpiny<CR>", { noremap = true, silent = true })
+
 -- Telescope
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})

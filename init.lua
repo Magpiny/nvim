@@ -5,15 +5,14 @@
   01/06/2024: This one was a joy to work on given my limited knowledge of lua
   But I finally hacked it! ... and it's the best confing I've ever made from ground up
   Thanks to Google, Youtube and GeminiAI and (Nvim, nvim &or vim extension developers)
-  I may use this config for some years to come.
-    Font:ComicShannsMono Nerd Font ColorScheme:kanagawa-dragon Terminal:GnomeTerminal
+
 ]]
 --
 require("core.options")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
+-- vim.g:clang_format#options = '-std=c++23'
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -39,12 +38,5 @@ vim.cmd("colorscheme kanagawa-dragon")
 
 -- keymaps
 require("core.keymaps")
-
--- Indent Colours
--- Colors are applied automatically based on user-defined highlight groups.
--- There is no default value.
-vim.cmd.highlight("IndentLine guifg=#838383")
--- Current indent line highlight
-vim.cmd.highlight("IndentLineCurrent guifg=#5d5d5d")
 
 ------------------------------------- END ---------------------------------------------------------
