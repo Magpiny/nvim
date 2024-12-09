@@ -33,7 +33,7 @@ return {
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
-				local disable_filetypes = { c = true, cpp = true, elixir = true }
+				local disable_filetypes = { elixir = true }
 				return {
 					timeout_ms = 500,
 					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -43,9 +43,8 @@ return {
 				lua = { "stylua" },
 				html = { "prettier" },
 				css = { "prettier" },
-				cpp = { "clang-format" }, --cpplint
-				-- Conform can also run multiple formatters sequentially
-				python = { "yapf", "autopep8", "isort", "sourcery" },
+				cpp = {"clang_format"}
+				python = { "sourcery", "autopep8" },
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.

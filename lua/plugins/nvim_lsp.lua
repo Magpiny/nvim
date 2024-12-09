@@ -78,9 +78,57 @@ return {
 		})
 
 		lspconfig.clangd.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+			-- capabilities = capabilities,
+
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--suggest-missing-includes",
+				"--clang-tidy",
+				"--header-insertion=iwyu",
+				"--header-insertion-decorators",
+				"--completion-style=detailed",
+				"--function-arg-placeholders",
+				"--std=c++23",
+			},
+
+			on_attach = function(client, bufnr)
+				-- Enable formatting with clang-format
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					pattern = ".cpp,.hpp,.cxx,.hxx,.C,.c,.h",
+					callback = function()
+						vim.lsp.buf.format({
+							timeout_ms = 5000,
+							async = false,
+						})
+					end,
+				})
+			end,
+			filetypes = { "c", "cpp" },
 		})
+
+		-- Configure clang-format style
+		local clang_format_style = {
+			BasedOnStyle = "Webkit",
+			UseTab = "Never",
+			IndentWidth = 4,
+			SpaceBeforeTrailingComments = 1,
+			BreakBeforeBraces = "Linux",
+			AllowShortFunctionsOnASingleLine = false,
+			AllowShortIfStatementsOnASingleLine = false,
+			SpaceAfterFunctionName = true,
+			PointerAlignment = "Left",
+			SpaceBeforeParens = "ControlStatements",
+		}
+
+		-- Set the style for clang-format
+		vim.g.clang_format_style = vim.json.encode(clang_format_style)
+
+		-- Use clang-format for fromatting
+		vim.api.nvim_create_user_command("Format", function()
+			vim.lsp.buf.format({ name = "clangd" })
+		end, {})
+
 		lspconfig.pyright.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
