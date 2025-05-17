@@ -6,6 +6,7 @@
   But I finally hacked it! ... and it's the best confing I've ever made from ground up
   Thanks to Google, Youtube and GeminiAI and (Nvim, nvim &or vim extension developers)
 
+  LAST UPDATED: 17May2025
 ]]
 --
 require("core.options")
@@ -13,6 +14,9 @@ require("core.options")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- vim.g:clang_format#options = '-std=c++23'
+
+vim.g.have_nerd_font = true
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
@@ -32,8 +36,8 @@ vim.g.loaded_netrwPlugin = 1
 
 require("lazy").setup("plugins")
 
--- colorscheme catppuccin
---vim.cmd.colorscheme("catppuccin")
+-- colorscheme kanagawa
+--
 vim.cmd("colorscheme kanagawa-dragon")
 
 -- keymaps

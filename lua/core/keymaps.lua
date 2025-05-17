@@ -9,7 +9,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.keymap.set("n", "<leader> h", ":nohlsearch<CR>")
 
 -- Nvim tree
-vim.api.nvim_set_keymap("n", "<C-v>", ":NvimTreeOpen<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-v>", ":Neotree show filesystem left toggle<CR>", { noremap = true, silent = true })
 
 -- Tagbar
 vim.api.nvim_set_keymap("n", "<F8>", ":TagbarToggle<CR>", { noremap = true, silent = true })

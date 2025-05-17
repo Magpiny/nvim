@@ -21,8 +21,8 @@ return {
 				-- Enables / disables diagnostic symbols
 				diagnostics = {
 					[vim.diagnostic.severity.ERROR] = { enabled = true, icon = "󱔂" },
-					[vim.diagnostic.severity.WARN] = { enabled = false, icon = "" },
-					[vim.diagnostic.severity.INFO] = { enabled = false, icon = "" },
+					[vim.diagnostic.severity.WARN] = { enabled = true, icon = "" },
+					[vim.diagnostic.severity.INFO] = { enabled = true, icon = "" },
 					[vim.diagnostic.severity.HINT] = { enabled = true, icon = "" },
 				},
 				gitsigns = {
@@ -49,7 +49,7 @@ return {
 				pinned = { button = "", filename = true },
 
 				-- Use a preconfigured buffer appearance— can be 'default', 'powerline', or 'slanted'
-				preset = "default",
+				preset = "powerline",
 
 				-- Configure the icons on the bufferline based on the visibility of a buffer.
 				-- Supports all the base icon options, plus `modified` and `pinned`.
@@ -67,7 +67,7 @@ return {
 				no_name_title = "untitled",
 				tabpages = true,
 				clickable = true,
-				separator = { right = "󰅂󰅂", right = "" },
+				separator = { left = "󰅂󰅂", right = "" },
 			})
 		end,
 	},

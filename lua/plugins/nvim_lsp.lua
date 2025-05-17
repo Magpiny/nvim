@@ -55,6 +55,8 @@ return {
 		-- Enable autocompletions
 		--local capabilities = cmp_nvim_lsp.default_capabilities()
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+		-- Diagnostic Signs
 		local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
@@ -78,7 +80,6 @@ return {
 		})
 
 		lspconfig.clangd.setup({
-			-- capabilities = capabilities,
 
 			cmd = {
 				"clangd",
@@ -89,7 +90,10 @@ return {
 				"--header-insertion-decorators",
 				"--completion-style=detailed",
 				"--function-arg-placeholders",
-				"--std=c++23",
+			},
+
+			init_options = {
+				fallbackFlags = { "-std=c++23", "-Wall" },
 			},
 
 			on_attach = function(client, bufnr)
@@ -104,6 +108,10 @@ return {
 					end,
 				})
 			end,
+			root_dir = vim.fn.getcwd(),
+
+			capabilities = capabilities,
+
 			filetypes = { "c", "cpp" },
 		})
 
@@ -140,10 +148,14 @@ return {
 		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
-		lspconfig.elixirls.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { "vim" },
+					},
+				},
+			},
 		})
 		lspconfig.bashls.setup({
 			capabilities = capabilities,

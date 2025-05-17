@@ -1,14 +1,7 @@
 -- Comments and autocompletion support Language support
 
 return {
-	--------- Comments -----------------------------------------------------------------------------
-	{
-		"numToStr/Comment.nvim",
-		opts = {
-			-- add any options here
-		},
-		lazy = false,
-	},
+	--------- Comments ----------------------------------------------------------------------------
 	{
 		"preservim/nerdcommenter",
 	},
@@ -28,12 +21,12 @@ return {
 			},
 		},
 		opts = {
-			notify_on_error = false,
+			notify_on_error = true,
 			format_on_save = function(bufnr)
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
-				local disable_filetypes = { elixir = true }
+				local disable_filetypes = { elixir = true, zig = true }
 				return {
 					timeout_ms = 500,
 					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -43,12 +36,13 @@ return {
 				lua = { "stylua" },
 				html = { "prettier" },
 				css = { "prettier" },
-				cpp = {"clang_format"}
-				python = { "sourcery", "autopep8" },
+				cpp = { "clang_format" },
+				python = { "sourcery", "autopep8", stop_after_first = true },
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
 				javascript = { " prettierd " }, --prettier
+				rust = { "rustfmt", lsp_format = "fallback" },
 			},
 		},
 	},

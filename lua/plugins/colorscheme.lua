@@ -1,29 +1,4 @@
 -- colorscheme
---[[
-return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	priority = 1000,
-
-	config = function()
-		require("catppuccin").setup({
-			integrations = {
-				treesitter = true,
-				treesitter_context = true,
-				cmp = true,
-				nvimtree = true,
-				notify = true,
-				mini = {
-					enabled = true,
-				},
-				gitsigns = true,
-				telescope = true,
-			},
-		})
-	end,
-}
---]]
---
 
 -- Kanagawa
 return {
