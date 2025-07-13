@@ -9,8 +9,10 @@
   LAST UPDATED: 17May2025
 ]]
 --
-require("core.options")
+--
+-- keymaps
 
+require("core.options")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- vim.g:clang_format#options = '-std=c++23'
@@ -35,12 +37,9 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 require("lazy").setup("plugins")
-
 -- colorscheme kanagawa
 --
 vim.cmd("colorscheme kanagawa-dragon")
-
--- keymaps
 require("core.keymaps")
 
 ------------------------------------- END ---------------------------------------------------------

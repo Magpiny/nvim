@@ -1,5 +1,5 @@
--- local codesnap = { "mistricky/codesnap.nvim", build = "make" }
-local codesnap = { "mistricky/codesnap.nvim", build = "make build_generator" } -- compiling from source
+local codesnap = { "mistricky/codesnap.nvim", build = "make" }
+-- local codesnap = { "mistricky/codesnap.nvim", build = "make build_generator" } -- compiling from source
 
 function codesnap.config()
 	require("codesnap").setup({

@@ -176,5 +176,6 @@ return {
 				cwd = "${workspaceFolder}",
 			},
 		}
+		dap.configurations.c = dap.configurations.cpp
 	end,
 }
