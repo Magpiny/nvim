@@ -20,7 +20,6 @@ return {
 				"python",
 				"javascript",
 				"rust",
-				"elixir",
 			},
 			sync_install = true,
 			highlight = { enable = true },

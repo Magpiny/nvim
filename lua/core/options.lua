@@ -27,6 +27,7 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 vim.opt.inccommand = "split"
 vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
+vim.opt.winborder = "rounded"
 
 vim.cmd([[
     syntax enable

@@ -13,9 +13,9 @@
 -- keymaps
 
 require("core.options")
+require("core.lsp")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
--- vim.g:clang_format#options = '-std=c++23'
 
 vim.g.have_nerd_font = true
 
@@ -39,6 +39,7 @@ vim.g.loaded_netrwPlugin = 1
 require("lazy").setup("plugins")
 -- colorscheme kanagawa
 --
+-- Set colour schemes
 vim.cmd("colorscheme kanagawa-dragon")
 require("core.keymaps")
 
