@@ -1,25 +1,36 @@
 return {
-	"nvim-neo-tree/neo-tree.nvim",
-	branch = "v3.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-		"MunifTanjim/nui.nvim",
-		"3rd/image.nvim",
-		opts = {}, -- Optional image support in preview window: See `# Preview Mode` for more information
-	},
-	lazy = false, -- neo-tree will lazily load itself
-	---@module "neo-tree"
-	---@type neotree.Config?
-	opts = {
-		filesystem = {
-			filtered_items = {
-				visible = true,
-				hide_dotfiles = false,
-				hide_gitignored = true,
-				hide_hidden = false,
-			},
-		},
-	},
-	-- fill any relevant options here
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v3.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "MunifTanjim/nui.nvim",
+  },
+  config = function()
+    require("neo-tree").setup({
+      close_if_last_window = true, -- Close Neovim if only the sidebar is left
+      window = {
+        width = 30,
+        mappings = {
+          ["<space>"] = "none", -- Disable space so it doesn't conflict with your leader
+        },
+      },
+      filesystem = {
+        filtered_items = {
+          visible = false,
+          hide_dotfiles = true,
+          hide_gitignored = true,
+          hide_by_name = {
+            "node_modules",
+            "target", -- Hide Rust build artifacts
+            "build",  -- Hide C++ build artifacts
+          },
+        },
+        follow_current_file = { enabled = true }, -- Sync sidebar with open buffer
+      },
+    })
+
+    -- TOGGLE KEYMAP: Using <leader>e instead of CTRL+v to avoid conflicts
+    vim.keymap.set("n", "<leader>e", "<CMD>Neotree toggle<CR>", { desc = "Toggle Explorer" })
+  end,
 }
