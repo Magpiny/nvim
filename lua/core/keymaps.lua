@@ -1,108 +1,61 @@
+-- lua/core/keymaps.lua
 -- WANJARE SAMUEL
---
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- FIX: removed duplicate leader/netrw globals (set in init.lua)
+-- FIX: standardised on vim.keymap.set throughout (removed nvim_set_keymap calls)
+-- FIX: "<leader> h" had a stray space → fixed to "<leader>h"
+-- FIX: "<C-v>" shadowed Visual Block mode → removed (neo-tree uses <leader>e)
+-- FIX: DAP keymaps removed — defined in plugins/debug.lua via Lazy keys= (single source of truth)
+-- FIX: telescope require() moved into a lazy wrapper to avoid startup errors
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+local map = vim.keymap.set
 
-vim.keymap.set("n", "<leader> h", ":nohlsearch<CR>")
+-- ── General ──────────────────────────────────────────────────────────────────
+-- FIX: was "<leader> h" (space before h = Space-Space-h, not Space-h)
+map("n", "<leader>h", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
--- Nvim tree
-vim.api.nvim_set_keymap("n", "<C-v>", ":Neotree show filesystem left toggle<CR>", { noremap = true, silent = true })
+-- ── File tree ────────────────────────────────────────────────────────────────
+-- FIX: removed <C-v> → Neotree (shadowed Visual Block mode)
+-- <leader>e is set by filetree.lua; kept here too for discoverability
+map("n", "<leader>e", "<CMD>Neotree toggle<CR>", { desc = "Explorer: Toggle" })
 
--- Tagbar
-vim.api.nvim_set_keymap("n", "<F8>", ":TagbarToggle<CR>", { noremap = true, silent = true })
+-- ── Tagbar ───────────────────────────────────────────────────────────────────
+map("n", "<F8>", "<cmd>TagbarToggle<CR>", { desc = "Tagbar: Toggle" })
 
--- Terminal
-vim.api.nvim_set_keymap("n", "<C-t>", ":HauntTerm -t magpiny<CR>", { noremap = true, silent = true })
+-- ── Terminal ─────────────────────────────────────────────────────────────────
+map("n", "<C-t>", "<cmd>HauntTerm -t magpiny<CR>", { desc = "Terminal: Open haunt" })
 
--- Telescope
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+-- ── Telescope ────────────────────────────────────────────────────────────────
+-- FIX: was require("telescope.builtin") at top level → crashes before Lazy loads telescope
+-- Wrap in functions so telescope is only required when the key is pressed
+map("n", "<leader>ff", function() require("telescope.builtin").find_files()  end, { desc = "Telescope: Find files"   })
+map("n", "<leader>fg", function() require("telescope.builtin").live_grep()   end, { desc = "Telescope: Live grep"    })
+map("n", "<leader>fb", function() require("telescope.builtin").buffers()     end, { desc = "Telescope: Buffers"      })
+map("n", "<leader>fh", function() require("telescope.builtin").help_tags()   end, { desc = "Telescope: Help tags"    })
 
--- Bufferline/Tabline
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+-- ── Barbar buffer navigation ──────────────────────────────────────────────────
+map("n", "<A-,>", "<Cmd>BufferPrevious<CR>",      { desc = "Buffer: Previous",       silent = true })
+map("n", "<A-.>", "<Cmd>BufferNext<CR>",           { desc = "Buffer: Next",           silent = true })
+map("n", "<A-<>", "<Cmd>BufferMovePrevious<CR>",   { desc = "Buffer: Move left",      silent = true })
+map("n", "<A->>", "<Cmd>BufferMoveNext<CR>",       { desc = "Buffer: Move right",     silent = true })
+map("n", "<A-1>", "<Cmd>BufferGoto 1<CR>",         { desc = "Buffer: Goto 1",         silent = true })
+map("n", "<A-2>", "<Cmd>BufferGoto 2<CR>",         { desc = "Buffer: Goto 2",         silent = true })
+map("n", "<A-3>", "<Cmd>BufferGoto 3<CR>",         { desc = "Buffer: Goto 3",         silent = true })
+map("n", "<A-4>", "<Cmd>BufferGoto 4<CR>",         { desc = "Buffer: Goto 4",         silent = true })
+map("n", "<A-5>", "<Cmd>BufferGoto 5<CR>",         { desc = "Buffer: Goto 5",         silent = true })
+map("n", "<A-6>", "<Cmd>BufferGoto 6<CR>",         { desc = "Buffer: Goto 6",         silent = true })
+map("n", "<A-7>", "<Cmd>BufferGoto 7<CR>",         { desc = "Buffer: Goto 7",         silent = true })
+map("n", "<A-8>", "<Cmd>BufferGoto 8<CR>",         { desc = "Buffer: Goto 8",         silent = true })
+map("n", "<A-9>", "<Cmd>BufferGoto 9<CR>",         { desc = "Buffer: Goto 9",         silent = true })
+map("n", "<A-0>", "<Cmd>BufferLast<CR>",            { desc = "Buffer: Last",           silent = true })
+map("n", "<A-p>", "<Cmd>BufferPin<CR>",             { desc = "Buffer: Pin/unpin",      silent = true })
+map("n", "<A-c>", "<Cmd>BufferClose<CR>",           { desc = "Buffer: Close",          silent = true })
+map("n", "<C-p>", "<Cmd>BufferPick<CR>",            { desc = "Buffer: Pick",           silent = true })
+map("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", { desc = "Buffer: Sort by number",    silent = true })
+map("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>",          { desc = "Buffer: Sort by name",      silent = true })
+map("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>",     { desc = "Buffer: Sort by directory", silent = true })
+map("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>",      { desc = "Buffer: Sort by language",  silent = true })
+map("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>",  { desc = "Buffer: Sort by window",    silent = true })
 
--- Move to previous/next
-map("n", "<A-,>", "<Cmd>BufferPrevious<CR>", opts)
-map("n", "<A-.>", "<Cmd>BufferNext<CR>", opts)
--- Re-order to previous/next
-map("n", "<A-<>", "<Cmd>BufferMovePrevious<CR>", opts)
-map("n", "<A->>", "<Cmd>BufferMoveNext<CR>", opts)
--- Goto buffer in position...
-map("n", "<A-1>", "<Cmd>BufferGoto 1<CR>", opts)
-map("n", "<A-2>", "<Cmd>BufferGoto 2<CR>", opts)
-map("n", "<A-3>", "<Cmd>BufferGoto 3<CR>", opts)
-map("n", "<A-4>", "<Cmd>BufferGoto 4<CR>", opts)
-map("n", "<A-5>", "<Cmd>BufferGoto 5<CR>", opts)
-map("n", "<A-6>", "<Cmd>BufferGoto 6<CR>", opts)
-map("n", "<A-7>", "<Cmd>BufferGoto 7<CR>", opts)
-map("n", "<A-8>", "<Cmd>BufferGoto 8<CR>", opts)
-map("n", "<A-9>", "<Cmd>BufferGoto 9<CR>", opts)
-map("n", "<A-0>", "<Cmd>BufferLast<CR>", opts)
--- Pin/unpin buffer
-map("n", "<A-p>", "<Cmd>BufferPin<CR>", opts)
--- Close buffer
-map("n", "<A-c>", "<Cmd>BufferClose<CR>", opts)
--- Wipeout buffer
---                 :BufferWipeout
--- Close commands
---                 :BufferCloseAllButCurrent
---                 :BufferCloseAllButPinned
---                 :BufferCloseAllButCurrentOrPinned
---                 :BufferCloseBuffersLeft
---                 :BufferCloseBuffersRight
--- Magic buffer-picking mode
-map("n", "<C-p>", "<Cmd>BufferPick<CR>", opts)
--- Sort automatically by...
-map("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", opts)
-map("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", opts)
-map("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", opts)
-map("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", opts)
-map("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", opts)
-
--- Other:
--- :BarbarEnable - enables barbar (enabled by default)
--- :BarbarDisable - very bad command, should never be used
---
--- Key mappings for DAP Debug Adapter Protocal
-vim.keymap.set("n", "<F5>", function()
-	require("dap").continue()
-end)
-vim.keymap.set("n", "<F10>", function()
-	require("dap").step_over()
-end)
-vim.keymap.set("n", "<F11>", function()
-	require("dap").step_into()
-end)
-vim.keymap.set("n", "<F12>", function()
-	require("dap").step_out()
-end)
-vim.keymap.set("n", "<Leader>b", function()
-	require("dap").toggle_breakpoint()
-end)
-vim.keymap.set("n", "<Leader>B", function()
-	require("dap").set_breakpoint()
-end)
-vim.keymap.set("n", "<Leader>lp", function()
-	require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
-end)
-vim.keymap.set("n", "<Leader>dr", function()
-	require("dap").repl.open()
-end)
-vim.keymap.set("n", "<Leader>dl", function()
-	require("dap").run_last()
-end)
-
--- Key mappings for DAP UI
-vim.keymap.set("n", "<Leader>du", function()
-	require("dapui").toggle()
-end)
-vim.keymap.set("n", "<Leader>de", function()
-	require("dapui").eval()
-end)
+-- NOTE: DAP keymaps are intentionally NOT defined here.
+-- They are declared inside plugins/debug.lua via Lazy's `keys = {}` table,
+-- which is the correct pattern — it also lazy-loads nvim-dap on first use.

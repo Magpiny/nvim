@@ -1,66 +1,62 @@
 --[[
---
---WANJARE SAMUEL neovim config file
-    licenced under MIT
-  01/06/2024: This one was a joy to work on given my limited knowledge of lua
-  But I finally hacked it! ... and it's the best confing I've ever made from ground up
-  Thanks to Google, Youtube and GeminiAI and (Nvim, nvim &or vim extension developers)
-
-  LAST UPDATED: 17May2025
+  WANJARE SAMUEL — Neovim config
+  Licence: MIT
+  Last updated: 2025-05-17
+  Target: Neovim 0.11+
 ]]
---
---
--- Disable netrw
+
+-- ── Disable netrw (using neo-tree instead) ───────────────────────────────────
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- 1. Set Leaders first
+-- ── Leaders — must be a asaet BEFORE any plugin/keymap loads ─────────────────────
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- 2. Load basic options
+-- Fix: ensure avante's compiled .so files are found before other plugins
+local avante_build = vim.fn.stdpath("data") .. "/lazy/avante.nvim/build"
+package.cpath = avante_build .. "/?.so;" .. package.cpath
+
+-- ── Core options ─────────────────────────────────────────────────────────────
 require("core.options")
 
--- 3. Bootstrap Lazy.nvim
+-- ── Bootstrap lazy.nvim ──────────────────────────────────────────────────────
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-
-    -- Use vim.fn.system to clone, and capture the output
-    local out = vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--branch=stable",
-        lazyrepo,
-        lazypath
-    })
-
-    -- Fundamental Fix: Check if the system command actually worked
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({
-            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out,                            "WarningMsg" },
-            { "\nPress any key to exit..." },
-        }, true, {})
-        vim.fn.getchar()
-        os.exit(1)
-    end
+-- FIX: vim.uv directly (vim.loop is deprecated in 0.11)
+if not vim.uv.fs_stat(lazypath) then
+	local out = vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"--branch=stable",
+		"https://github.com/folke/lazy.nvim.git",
+		lazypath,
+	})
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
-
 vim.opt.rtp:prepend(lazypath)
 
--- 4. Setup Plugins (This loads everything in the plugins/ folder)
-require("lazy").setup("plugins")
+-- ── Plugins — Lazy scans every file under lua/plugins/ ───────────────────────
+require("lazy").setup("plugins", {
+	change_detection = { notify = false },
+})
 
--- 5. Load LSP and Keymaps AFTER plugins are initialized
+-- ── LSP ──────────────────────────────────────────────────────────────────────
 require("core.lsp")
+
+-- ── Keymaps ──────────────────────────────────────────────────────────────────
 require("core.keymaps")
 
--- 6. Native treesitter (no plugin needed on Neovim 0.12+)
-require("config.treesitter")
+-- ── Treesitter ───────────────────────────────────────────────────────────────
+--  require("config.treesitter")
 
--- 6. Colorscheme (Ensure this is loaded after Lazy)
-vim.cmd("colorscheme kanagawa-dragon")
-------------------------------------- END ---------------------------------------------------------
+-- ── Colorscheme — loaded last so plugins have set up highlight groups ─────────
+vim.cmd.colorscheme("kanagawa-dragon")

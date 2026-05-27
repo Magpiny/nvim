@@ -1,48 +1,43 @@
+-- lua/plugins/mason.lua
 return {
-    "williamboman/mason.nvim",
-    dependencies = {
-        "williamboman/mason-lspconfig.nvim",
-    },
+	{
+		"williamboman/mason.nvim",
+		build = ":MasonUpdate",
+		config = function()
+			require("mason").setup({
+				ui = {
+					icons = {
+						package_installed = "✓",
+						package_pending = "➜",
+						package_uninstalled = "✗",
+					},
+				},
+			})
+		end,
+	},
 
-    opts = {
-        ensure_installed = {
-            "clangd",
-            "clang-format",
-        },
-    },
-
-    config = function()
-        local mason = require("mason")
-        local mason_lspconfig = require("mason-lspconfig")
-
-        -- Enable mason and configure icons
-        mason.setup({
-            ui = {
-                icons = {
-                    package_installed = "✓",
-                    package_pending = "➜",
-                    package_uninstalled = "✗",
-                },
-            },
-        })
-
-        mason_lspconfig.setup({
-            -- list of servers for mason to install
-            ensure_installed = {
-                "vtsls",
-                "html",
-                "tailwindcss",
-                "lua_ls",
-                "pyright",
-                "clangd",
-                "jinja_lsp",
-                "rust_analyzer",
-                "cssls",
-                "neocmake",
-                "jsonls",
-            },
-            -- autoinstall configured servers with lspconfig
-            automatic_installation = true,
-        })
-    end,
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					"vtsls",
+					"html",
+					"lua_ls",
+					"pyright",
+					"clangd",
+					"rust_analyzer",
+					"cssls",
+					"neocmake",
+					"jsonls",
+					"bashls",
+				},
+				-- FIX: automatic_installation is deprecated in mason-lspconfig v2
+				-- New option is automatic_enable; but since we call vim.lsp.enable()
+				-- manually in core/lsp.lua, we leave this false to avoid double-enabling.
+				automatic_enable = false,
+			})
+		end,
+	},
 }
