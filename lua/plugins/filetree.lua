@@ -10,7 +10,7 @@ return {
 		require("neo-tree").setup({
 			close_if_last_window = true, -- Close Neovim if only the sidebar is left
 			window = {
-				width = 30,
+				width = 20,
 				mappings = {
 					["<space>"] = "none", -- Disable space so it doesn't conflict with your leader
 				},

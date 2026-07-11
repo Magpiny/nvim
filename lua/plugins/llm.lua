@@ -35,7 +35,7 @@ return {
 			-- Run: ollama create magpiny-coder -f Modelfile
 			ollama = {
 				endpoint = "http://localhost:11434", -- OpenAI-compatible endpoint
-				model = "mgpcpp-coder:latest", -- your custom Modelfile model
+				model = "ornith:latest", -- your custom Modelfile model
 				timeout = 90000, -- 90s — local model can be slow on cold start
 				extra_request_body = {
 					temperature = 0.15, -- matches your Modelfile — deterministic code
